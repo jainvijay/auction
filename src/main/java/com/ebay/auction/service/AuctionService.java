@@ -1,8 +1,13 @@
 package com.ebay.auction.service;
 
 import com.ebay.auction.model.entity.Auction;
+import com.ebay.auction.model.entity.Bid;
 import com.ebay.auction.model.enums.AuctionStatus;
+import com.ebay.auction.model.enums.BidStatus;
 import com.ebay.auction.repository.AuctionRepository;
+import com.ebay.auction.repository.BidRepository;
+import jakarta.transaction.Transactional;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +18,8 @@ import java.util.Optional;
 * Service class for managing auction resources.
 * */
 @Service
+@Slf4j
+@Transactional
 public class AuctionService {
 
     /**
@@ -20,6 +27,9 @@ public class AuctionService {
      */
     @Autowired
     private AuctionRepository auctionRepository;
+
+    @Autowired
+    private BidRepository bidRepository;
 
     public List<Auction> getAllAuctions() {
         return auctionRepository.findAll();
@@ -67,5 +77,24 @@ public class AuctionService {
 
     public List<Auction> getAuctionByStatus(AuctionStatus auctionStatus) {
         return auctionRepository.findByAuctionStatus(auctionStatus);
+    }
+
+    public void closeAuction(Auction auction) {
+        auction.setAuctionStatus(AuctionStatus.COMPLETED);
+        auction = updateAuction(auction);
+        Bid highestBid = bidRepository.findFirstByAuctionIdAndBidStatusOrderByBidPriceDesc(auction.getId(), BidStatus.ACCEPTED);
+        if (highestBid == null) {
+            auction.setAuctionStatus(AuctionStatus.CANCELLED);
+            updateAuction(auction);
+            log.info("Auction cancelled for item {} found no winner"
+                    , auction.getName());
+        } else {
+            auction.setWinner(highestBid.getUserName());
+            auction.setSellPrice(highestBid.getBidPrice());
+            auction = updateAuction(auction);
+            log.info("Auction closed for item {} sold to {} at price {} "
+                    , auction.getName(), auction.getWinner(), auction.getSellPrice());
+
+        }
     }
 }

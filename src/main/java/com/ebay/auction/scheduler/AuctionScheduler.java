@@ -47,25 +47,12 @@ public class AuctionScheduler {
         for (Auction auction: auctions) {
             if (canCloseAuction(auction)) {
                 log.info("Close Auction: " + auction.getName());
-                auction.setAuctionStatus(AuctionStatus.COMPLETED);
-                auction = auctionService.updateAuction(auction);
-                Bid highestBid = bidService.getHighestBid(auction.getId());
-                if (highestBid == null) {
-                    auction.setAuctionStatus(AuctionStatus.CANCELLED);
-                    log.info("Auction cancelled for item {} found no winner"
-                            , auction.getName());
-                } else {
-                    auction.setWinner(highestBid.getUserName());
-                    auction.setSellPrice(highestBid.getBidPrice());
-                    auction = auctionService.updateAuction(auction);
-                    log.info("Auction closed for item {} sold to {} at price {} "
-                            , auction.getName(), auction.getWinner(), auction.getSellPrice());
-
-                }
+                auctionService.closeAuction(auction);
             }
         }
         log.info("closeAuctions Finished");
     }
+
 
     private boolean canCloseAuction(Auction auction) {
         return auction.getEndTime().isBefore(LocalDateTime.now());
