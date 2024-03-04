@@ -44,10 +44,10 @@ public class AuctionController {
     @PostMapping()
     @RouterOperation(operation = @Operation(description = "create an auction", tags = "auction",
             responses = @ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = Auction.class)))))
-    public ResponseEntity<Auction> updateAuction(@RequestBody Auction auction) {
-        Auction updatedAuction = auctionService.createAuction(auction);
-        if (updatedAuction != null) {
-            return new ResponseEntity<>(updatedAuction, HttpStatus.OK);
+    public ResponseEntity<Auction> createAuction(@RequestBody Auction auction) {
+        Auction createdAuction = auctionService.createAuction(auction);
+        if (createdAuction != null) {
+            return new ResponseEntity<>(createdAuction, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }

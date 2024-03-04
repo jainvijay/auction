@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 /**
@@ -55,7 +56,22 @@ public class Auction {
      * Defaults to 0 if not provided.
      */
     @Column(name = "start_price")
-    private double startPrice = 0;
+    private BigDecimal startPrice = BigDecimal.ZERO;
+
+    /**
+     * The sell price for the item based on the highest bid.
+     */
+    @Column(name = "sell_price")
+    @Schema(accessMode = Schema.AccessMode.READ_ONLY)
+    private BigDecimal sellPrice;
+
+    /**
+     *
+     * The winner for the auction.
+     */
+    @Column(name = "winner")
+    @Schema(accessMode = Schema.AccessMode.READ_ONLY)
+    private String winner;
 
     /**
      * The start time of the auction.
