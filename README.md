@@ -3,6 +3,11 @@
 ## Overview
 The Auction Service is a backend system designed to manage auctions and bids. It provides functionality for creating auctions, placing bids, retrieving auction information, and more.
 
+Green components are natural extensions to build auction service.
+However, we have not implemented them.
+![Auction Service Architecture](docs/images/architecture.png)
+
+
 ## Features
 - **Create Auction**: Allows users to create new auctions with specified parameters such as start time, end time, and starting price.
 - **Place Bid**: Enables users to place bids on existing auctions.

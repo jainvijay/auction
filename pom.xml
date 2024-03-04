@@ -8,7 +8,7 @@
         <version>3.2.3</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>com.ebay</groupId>
+    <groupId>com.jain</groupId>
     <artifactId>auction</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>auction</name>
@@ -134,8 +134,8 @@
                         </goals>
                         <configuration>
                             <excludes>
-                                <exclude>com/ebay/auction/model/**</exclude>
-                                <exclude>com/ebay/auction/repository/**</exclude>
+                                <exclude>com/jain/auction/model/**</exclude>
+                                <exclude>com/jain/auction/repository/**</exclude>
                             </excludes>
                         </configuration>
                     </execution>
@@ -154,7 +154,7 @@
                             <artifactId>lombok</artifactId>
                         </exclude>
                     </excludes>
-                    <mainClass>com.ebay.auction.AuctionApplication</mainClass>
+                    <mainClass>com.jain.auction.AuctionApplication</mainClass>
                 </configuration>
                 <executions>
                     <execution>
