@@ -4,7 +4,7 @@
 The Auction Service is a backend system designed to manage auctions and bids. It provides functionality for creating auctions, placing bids, retrieving auction information, and more.
 
 Green components are natural extensions to build auction service.
-However, we have not implemented them.
+However, we have not implemented them nor we have implemented load balancers and app servers.
 ![Auction Service Architecture](docs/images/architecture.png)
 
 
